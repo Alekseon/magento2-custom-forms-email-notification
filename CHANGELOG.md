@@ -1,5 +1,4 @@
 # Changelog
-All notable changes to this project will be documented in this file.
 
 
 ## [Unreleased]
@@ -7,4 +6,6 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 ### Added
 
-
+## [100.0.0] - 2022-10-07
+### Added
+- init
