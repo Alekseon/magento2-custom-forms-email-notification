@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="form_edit_tabs">
+            <block class="Alekseon\CustomFormsEmailNotification\Block\Adminhtml\Form\Edit\Tab\ConfirmationEmail" name="form_widget_confirmation_email_tab"/>
+           <action method="addTab">
+                <argument name="name" xsi:type="string">form_widget_confirmation_email_tab</argument>
+                <argument name="block" xsi:type="string">form_widget_confirmation_email_tab</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="form_edit_tabs">
+            <block class="Alekseon\CustomFormsEmailNotification\Block\Adminhtml\Form\Edit\Tab\NewEntityEmailNotification" name="form_widget_customer_new_entity_email_notification_tab"/>
+            <action method="addTab">
+                <argument name="name" xsi:type="string">form_widget_customer_new_entity_email_notification_tab</argument>
+                <argument name="block" xsi:type="string">form_widget_customer_new_entity_email_notification_tab</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>
