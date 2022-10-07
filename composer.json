@@ -1,5 +1,5 @@
 {
-    "name": "alekseon/alekseon-eav",
+    "name": "alekseon/custom-forms-email-notification",
     "description": "N/A",
     "require": {
         "magento/framework": "100.* | 101.* | 102.* | 103.*",
