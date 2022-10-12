@@ -1,14 +1,18 @@
 <?php
-
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
 namespace Alekseon\CustomFormsEmailNotification\Block\Adminhtml\Form\Edit\Tab;
 
 use Alekseon\AlekseonEav\Block\Adminhtml\Entity\Edit\Form;
 use Magento\Backend\Block\Widget\Tab\TabInterface;
+use Magento\Framework\Exception\LocalizedException;
 
 class ConfirmationEmail extends Form implements TabInterface
 {
     const TITLE = 'Confirmation email';
-    const TAB_SEND_CONFIRMATION_EMAIL_TO_CUSTOMER = 'Send confirmation email to customer';
+
     protected $dataObject;
 
     /**
@@ -30,7 +34,7 @@ class ConfirmationEmail extends Form implements TabInterface
     /**
      * {@inheritdoc}
      */
-    public function canShowTab()
+    public function canShowTab(): bool
     {
         return (bool) $this->getDataObject()->getCanUseForWidget();
     }
@@ -38,7 +42,7 @@ class ConfirmationEmail extends Form implements TabInterface
     /**
      * {@inheritdoc}
      */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return false;
     }
@@ -56,14 +60,14 @@ class ConfirmationEmail extends Form implements TabInterface
 
     /**
      * @return $this
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm(): self
     {
         $dataObject = $this->getDataObject();
 
-        /** @var \Magento\Framework\Data\Form $form */
         $form = $this->_formFactory->create();
+
         $widgetFieldset = $form->addFieldset('confirmation_email_settings', ['legend' => __(self::TITLE)]);
         $this->addAllAttributeFields($widgetFieldset, $dataObject, ['included' => ['confirmation_email']]);
 

@@ -1,7 +1,14 @@
 <?php
-
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
 namespace Alekseon\CustomFormsEmailNotification\Plugin;
 
+/**
+ * Class RemoveAttributesFromGeneralTabPlugin
+ * @package Alekseon\CustomFormsEmailNotification\Plugin
+ */
 class RemoveAttributesFromGeneralTabPlugin
 {
     /**
@@ -14,7 +21,7 @@ class RemoveAttributesFromGeneralTabPlugin
     public function beforeAddAllAttributeFields($generalTabBlock, $generalFieldset, $formObject, $groups = []): array
     {
         $groups['excluded'][] = 'confirmation_email';
-        $groups['excluded'][] = 'new_entity_notification_email';
+
         return [$generalFieldset, $formObject, $groups];
     }
 }
