@@ -36,6 +36,11 @@ class FormRecordSaveAfter implements ObserverInterface
     {
         /** @var FormRecord $formRecord */
         $formRecord = $observer->getObject();
+
+        if (!$formRecord->isObjectNew()) {
+            return;
+        }
+            /** @var Form $form */
         $form = $formRecord->getForm();
 
         if ($formRecord->isObjectNew() && $form->getEnableEmailNotification()) {
