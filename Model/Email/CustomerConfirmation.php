@@ -5,9 +5,8 @@
  */
 namespace Alekseon\CustomFormsEmailNotification\Model\Email;
 
+use Alekseon\CustomFormsBuilder\Model\FormRecord;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\MailException;
 use Magento\Framework\Mail\Template\SenderResolverInterface;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Store\Model\ScopeInterface;
@@ -15,15 +14,11 @@ use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class EmailNotification
- * @package Alekseon\CustomFormsEmailNotification\Model
+ * Class CustomerConfirmation
+ * @package Alekseon\CustomFormsEmailNotification\Model\Email
  */
-class EmailNotification
+class CustomerConfirmation
 {
-    const XML_PATH_NEW_ENTITY_EMAIL_IDENTITY = 'alekseon_custom_forms/new_entity_notification_email/identity';
-    const XML_PATH_NEW_ENTITY_EMAIL_TEMPLATE = 'alekseon_custom_forms/new_entity_notification_email/template';
-    const XML_PATH_NEW_ENTITY_EMAIL_RECEIVER = 'alekseon_custom_forms/new_entity_notification_email/to';
-
     /**
      * @var TransportBuilder
      */
@@ -71,52 +66,57 @@ class EmailNotification
     }
 
     /**
-     * @param array $templateParams
-     * @return bool
-     * @throws LocalizedException
-     * @throws MailException
+     * @param FormRecord $formRecord
      */
-    public function sendNotificationEmail(array $templateParams = []): bool
+    public function send(FormRecord $formRecord)
     {
-        $emailsConfig = $this->scopeConfig->getValue(self::XML_PATH_NEW_ENTITY_EMAIL_RECEIVER);
-        $emails = explode(',', $emailsConfig);
+        $form = $formRecord->getForm();
 
-        return $this->sendEmailTemplate(
-            $emails,
-            self::XML_PATH_NEW_ENTITY_EMAIL_TEMPLATE,
-            self::XML_PATH_NEW_ENTITY_EMAIL_IDENTITY,
-            $templateParams
-        );
+        if (!$form->getCustomerEmailNotificationEnable()) {
+            return false;
+        }
+
+        $emailField = $form->getCustomerNotificationEmailField();
+        $email = $formRecord->getData($emailField);
+
+        if (!$email) {
+            return false;
+        }
+
+        $templateId = $form->getCustomerNotificationTemplate();
+        $sender = $form->getCustomerNotificationIdentity();
+
+
+        $emails = [$email];
+        if ($form->getCustomerNotificationCopyTo()) {
+            $copyTo = explode(',', $form->getCustomerNotificationCopyTo());
+            $emails = array_merge($copyTo, $emails);
+        }
+
+        $templateParams = [
+            'form' => $form,
+            'record' => $formRecord,
+        ];
+
+        return $this->sendEmailTemplate($emails, $templateId, $sender, $templateParams);
     }
 
     /**
-     * @param array|string $emails
-     * @param string|int $templateId
-     * @param string $sender
-     * @param array $templateParams
+     * @param $email
+     * @param $templateId
      * @return bool
-     * @throws LocalizedException
-     * @throws MailException
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
-    protected function sendEmailTemplate($emails, $templateId, string $sender, array $templateParams = []): bool
+    protected function sendEmailTemplate($emails, $templateId,$sender, $templateParams = [])
     {
-        $storeId = $this->storeManager->getDefaultStoreView()->getId();
-        $templateId = $this->scopeConfig->getValue($templateId);
-
-        if (!is_array($emails)) {
-            $emails = [$emails];
-        }
-
-        $from = $this->senderResolver->resolve(
-            $this->scopeConfig->getValue($sender, ScopeInterface::SCOPE_STORE, $storeId),
-            $storeId
-        );
-
         $email = array_pop($emails);
 
         if (!$email) {
             return false;
         }
+
+        $from = $this->senderResolver->resolve($sender);
+        $storeId = $this->storeManager->getDefaultStoreView()->getId();
 
         $this->transportBuilder->setTemplateIdentifier($templateId)
             ->setTemplateOptions(
@@ -129,11 +129,11 @@ class EmailNotification
             ->setFrom($from)
             ->addTo($email);
 
+        $transport = $this->transportBuilder->getTransport();
+
         foreach ($emails as $email) {
             $this->transportBuilder->addBcc($email);
         }
-
-        $transport = $this->transportBuilder->getTransport();
 
         try {
             $transport->sendMessage();

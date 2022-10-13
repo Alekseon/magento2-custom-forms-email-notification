@@ -12,6 +12,9 @@
                 <identity>sales</identity>
                 <template>alekseon_custom_forms_new_entity_notification_email_template</template>
             </new_entity_notification_email>
+            <customer_confirmation_email>
+                <template>alekseon_custom_forms_customer_confirmation_email_template</template>
+            </customer_confirmation_email>
         </alekseon_custom_forms>
     </default>
 </config>

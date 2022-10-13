@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [100.1.2] - 2022-10-13
+### Added
+- customer confirmation email
+
 ## [100.1.1] - 2022-10-10
 ### Fixed
 - fix for email template params

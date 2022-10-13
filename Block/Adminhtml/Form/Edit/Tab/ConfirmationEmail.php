@@ -5,6 +5,7 @@
  */
 namespace Alekseon\CustomFormsEmailNotification\Block\Adminhtml\Form\Edit\Tab;
 
+use Alekseon\AlekseonEav\Api\Data\AttributeInterface;
 use Alekseon\AlekseonEav\Block\Adminhtml\Entity\Edit\Form;
 use Magento\Backend\Block\Widget\Tab\TabInterface;
 use Magento\Framework\Exception\LocalizedException;
@@ -12,6 +13,8 @@ use Magento\Framework\Exception\LocalizedException;
 class ConfirmationEmail extends Form implements TabInterface
 {
     const TITLE = 'Confirmation email';
+
+    const DEFAULT_TEMPLATE_CONFIG_PATH = 'alekseon_custom_forms/customer_confirmation_email/template';
 
     protected $dataObject;
 
@@ -68,14 +71,36 @@ class ConfirmationEmail extends Form implements TabInterface
 
         $form = $this->_formFactory->create();
 
-        $widgetFieldset = $form->addFieldset('confirmation_email_settings', ['legend' => __(self::TITLE)]);
+        $widgetFieldset = $form->addFieldset('confirmation_email_settings',
+            ['legend' => __('Admin Confirmation Email')]
+        );
+
         $this->addAllAttributeFields($widgetFieldset, $dataObject, ['included' => ['confirmation_email']]);
+
+        if ($dataObject->getCanUseForWidget()) {
+            $customerConfirmationEmailFieldset = $form->addFieldset('customer_confirmation_email_settings',
+                ['legend' => __('Customer Confirmation Email')]
+            );
+
+            $this->addAllAttributeFields($customerConfirmationEmailFieldset, $dataObject, ['included' => ['customer_confirmation_email']]);
+        }
 
         $this->setForm($form);
 
         return parent::_prepareForm();
     }
 
+    /**
+     * @param $formFieldset
+     * @param AttributeInterface $attribute
+     */
+    public function addAttributeField($formFieldset, AttributeInterface $attribute)
+    {
+        if ($attribute->getAttributeCode() == 'customer_notification_template') {
+            $attribute->getSourceModel()->setPath($this->_scopeConfig->getValue(self::DEFAULT_TEMPLATE_CONFIG_PATH));
+        }
+        return parent::addAttributeField($formFieldset, $attribute);
+    }
 
     /**
      * Initialize form fileds values
@@ -84,7 +109,17 @@ class ConfirmationEmail extends Form implements TabInterface
      */
     protected function _initFormValues(): self
     {
-        $this->getForm()->addValues($this->getDataObject()->getData());
+        $data = $this->getDataObject()->getData();
+
+        if (!$this->getDataObject()->getCustomerNotificationTemplate()) {
+            $data['customer_notification_template'] = $this->_scopeConfig->getValue(self::DEFAULT_TEMPLATE_CONFIG_PATH);
+        }
+
+        if (!$this->getDataObject()->getCustomerNotificationIdentity()) {
+            $data['customer_notification_identity'] = 'general';
+        }
+
+        $this->getForm()->addValues($data);
         return parent::_initFormValues();
     }
 }
