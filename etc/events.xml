@@ -7,6 +7,9 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="alekseon_custom_form_builder_form_record_save_after">
-        <observer name="alekseon_custom_forms_builder_form_record_save_after" instance="Alekseon\CustomFormsEmailNotification\Observer\FormRecordSaveAfter" />
+        <observer name="Alekseon_CustomFormsEmailNotification::FormRecordSaveAfter" instance="Alekseon\CustomFormsEmailNotification\Observer\FormRecordSaveAfter" />
+    </event>
+    <event name="alekseon_widget_form_after_submit">
+        <observer name="Alekseon_CustomFormsEmailNotification::FormAfterSubmit" instance="Alekseon\CustomFormsEmailNotification\Observer\FormAfterSubmit" />
     </event>
 </config>

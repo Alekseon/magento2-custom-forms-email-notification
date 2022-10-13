@@ -21,6 +21,7 @@ class RemoveAttributesFromGeneralTabPlugin
     public function beforeAddAllAttributeFields($generalTabBlock, $generalFieldset, $formObject, $groups = []): array
     {
         $groups['excluded'][] = 'confirmation_email';
+        $groups['excluded'][] = 'customer_confirmation_email';
 
         return [$generalFieldset, $formObject, $groups];
     }
