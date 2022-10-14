@@ -39,7 +39,7 @@ class ConfirmationEmail extends Form implements TabInterface
      */
     public function canShowTab(): bool
     {
-        return (bool) $this->getDataObject()->getCanUseForWidget();
+        return true;
     }
 
     /**
