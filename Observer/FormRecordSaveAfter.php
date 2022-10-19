@@ -42,7 +42,8 @@ class FormRecordSaveAfter implements ObserverInterface
             $this->emailNotification->sendNotificationEmail(
                 [
                     'form' => $form,
-                    'entity' => $formRecord,
+                    'record' => $formRecord,
+                    'recordHtml' => '',
                 ]
             );
         }
