@@ -9,10 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
-## [Unreleased]
+## [100.1.5] - 2022-10-27
+### Fixed
+- fix for php 8.1
+
+## [100.1.5] - 2022-10-19
 ### Fixed
 - always show "Confirmation label" tab
-- recordHtml param
+### Added
+- recordHtml email template param
 
 ## [100.1.3] - 2022-10-13
 ### Added

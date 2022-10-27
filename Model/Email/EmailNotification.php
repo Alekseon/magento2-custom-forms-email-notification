@@ -79,6 +79,10 @@ class EmailNotification
     public function sendNotificationEmail(array $templateParams = []): bool
     {
         $emailsConfig = $this->scopeConfig->getValue(self::XML_PATH_NEW_ENTITY_EMAIL_RECEIVER);
+        if (!$emailsConfig) {
+            return false;
+        }
+
         $emails = explode(',', $emailsConfig);
 
         return $this->sendEmailTemplate(
