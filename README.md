@@ -1,6 +1,6 @@
 <h1 align="center">  
 <br/>
-  <img src="https://i.imgur.com/b2oclHA.png" alt="Custom Forms Builder" width="400">  
+  <img src="https://i.imgur.com/b2oclHA.png" alt="Custom Forms Email Notification" width="400">  
   <br>  
   Alekseon_CustomFormsEmailNotification
   <br>  
@@ -19,7 +19,8 @@ This module is responsible for sending notification emails to admins and confirm
 More in wiki:
 <br>
 <ul>
-<li>https://github.com/Alekseon/magento2-widget-forms/wiki/New-Entity-Notification-Email</li>
-<li>https://github.com/Alekseon/magento2-widget-forms/wiki/Confirmation-Email</li>
+  <li><a href="https://github.com/Alekseon/magento2-widget-forms/wiki">Widget Forms</a></li>
+  <li><a href="https://github.com/Alekseon/magento2-widget-forms/wiki/New-Entity-Notification-Email">Widget Forms - New Entity Notification Email</a></li>
+  <li><a href="https://github.com/Alekseon/magento2-widget-forms/wiki/Confirmation-Email">Widget Forms - Confirmation Email</a></li>
 </ul>
 </p>
