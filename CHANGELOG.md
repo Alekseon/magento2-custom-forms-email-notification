@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [Unreleased]
+### Fixed
+- check if customer notification email is set
+
 ## [100.1.5] - 2022-10-27
 ### Fixed
 - fix for php 8.1

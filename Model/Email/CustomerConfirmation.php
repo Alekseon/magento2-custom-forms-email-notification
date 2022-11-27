@@ -77,6 +77,10 @@ class CustomerConfirmation
         }
 
         $emailField = $form->getCustomerNotificationEmailField();
+        if (!$emailField) {
+            return false;
+        }
+
         $email = $formRecord->getData($emailField);
 
         if (!$email) {
