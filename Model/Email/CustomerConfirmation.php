@@ -77,10 +77,6 @@ class CustomerConfirmation
         }
 
         $emailField = $form->getCustomerNotificationEmailField();
-        if (!$emailField) {
-            return false;
-        }
-
         $email = $formRecord->getData($emailField);
 
         if (!$email) {
@@ -133,11 +129,11 @@ class CustomerConfirmation
             ->setFrom($from)
             ->addTo($email);
 
-        $transport = $this->transportBuilder->getTransport();
-
         foreach ($emails as $email) {
             $this->transportBuilder->addBcc($email);
         }
+
+        $transport = $this->transportBuilder->getTransport();
 
         try {
             $transport->sendMessage();

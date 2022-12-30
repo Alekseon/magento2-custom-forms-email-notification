@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Fixed
+- fix for sending BCC copy confirmation email 
 - check if customer notification email is set
 
 ## [100.1.5] - 2022-10-27
