@@ -10,12 +10,12 @@
         <tab id="alekseon" translate="label" sortOrder="150">
             <label>Alekseon Extensions</label>
         </tab>
-        <section id="alekseon_custom_forms" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+        <section id="alekseon_custom_forms" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
             <label>Custom Forms</label>
             <tab>alekseon</tab>
             <resource>Alekseon_CustomFormsEmailNotification::config</resource>
-            <group id="new_entity_notification_email" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="1">
+            <group id="new_entity_notification_email" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>New Entity Notification Email</label>
                 <field id="identity" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
                     <label>Email Sender</label>
@@ -26,7 +26,7 @@
                     <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
                     <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
                 </field>
-                <field id="to" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="to" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Send Email To</label>
                     <comment>Comma-separated</comment>
                 </field>

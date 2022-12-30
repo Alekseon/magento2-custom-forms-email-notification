@@ -44,7 +44,8 @@ class FormRecordSaveAfter implements ObserverInterface
                     'form' => $form,
                     'record' => $formRecord,
                     'recordHtml' => '',
-                ]
+                ],
+                $formRecord->getStoreId()
             );
         }
     }

@@ -76,9 +76,14 @@ class EmailNotification
      * @throws LocalizedException
      * @throws MailException
      */
-    public function sendNotificationEmail(array $templateParams = []): bool
+    public function sendNotificationEmail(array $templateParams = [], $storeId = null): bool
     {
-        $emailsConfig = $this->scopeConfig->getValue(self::XML_PATH_NEW_ENTITY_EMAIL_RECEIVER);
+        $emailsConfig = $this->scopeConfig->getValue(
+            self::XML_PATH_NEW_ENTITY_EMAIL_RECEIVER,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
         if (!$emailsConfig) {
             return false;
         }
