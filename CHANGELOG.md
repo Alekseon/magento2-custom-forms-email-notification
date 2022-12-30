@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - fix for php 8.1
 
-## [100.1.5] - 2022-10-19
+## [100.1.4] - 2022-10-19
 ### Fixed
 - always show "Confirmation label" tab
 ### Added
