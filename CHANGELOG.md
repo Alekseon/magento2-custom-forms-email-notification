@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
-## [Unreleased]
+## [100.1.6] - 2022-12-30
 ### Fixed
 - fix for sending BCC copy confirmation email 
 - check if customer notification email is set
+### Changed
+- changed scope of Notification receiver email configuration to store level
 
 ## [100.1.5] - 2022-10-27
 ### Fixed
