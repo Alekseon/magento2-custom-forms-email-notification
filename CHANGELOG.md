@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [Unreleased]
+### Fixed
+- fix for case when CustomerNotificationEmailField value is null
+
 ## [100.1.6] - 2022-12-30
 ### Fixed
 - fix for sending BCC copy confirmation email 
