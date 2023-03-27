@@ -9,7 +9,6 @@ use Alekseon\CustomFormsBuilder\Model\FormRecord;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Mail\Template\SenderResolverInterface;
 use Magento\Framework\Mail\Template\TransportBuilder;
-use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 
