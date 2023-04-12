@@ -42,10 +42,9 @@ class FormRecordSaveAfter implements ObserverInterface
 
         if ($formRecord->isObjectNew() && $form->getEnableEmailNotification()) {
             $emailNotification = $this->emailNotificationFactory->create();
-            $emailNotification->setFormId($form->getId());
-            $emailNotification->setRecordId($formRecord->getId());
+            $emailNotification->setFormRecord($formRecord);
             $emailNotification->setNotificationType('new_record_notification');
-            $emailNotification->getResource()->save($emailNotification);
+            $emailNotification->send();
         }
     }
 }

@@ -39,10 +39,9 @@ class FormAfterSubmit implements ObserverInterface
         $form = $formRecord->getForm();
         if ($form->getCustomerEmailNotificationEnable()) {
             $emailNotification = $this->emailNotificationFactory->create();
-            $emailNotification->setFormId($form->getId());
-            $emailNotification->setRecordId($formRecord->getId());
+            $emailNotification->setFormRecord($formRecord);
             $emailNotification->setNotificationType('customer_confirmation');
-            $emailNotification->getResource()->save($emailNotification);
+            $emailNotification->send();
         }
     }
 }

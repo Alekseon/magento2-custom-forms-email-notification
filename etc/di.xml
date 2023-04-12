@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Alekseon sp. z o.o.
+ * http://www.alekseon.com/
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Alekseon\CustomFormsEmailNotification\Model\EmailNotification">
+        <arguments>
+            <argument name="emailSenders" xsi:type="array">
+                <item name="customer_confirmation" xsi:type="object">Alekseon\CustomFormsEmailNotification\Model\Email\CustomerConfirmation</item>
+                <item name="new_record_notification" xsi:type="object">Alekseon\CustomFormsEmailNotification\Model\Email\EmailNotification</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
