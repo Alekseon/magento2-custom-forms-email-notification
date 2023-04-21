@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [100.1.10] - 2023-04-23
+### Fixed
+- fix for db_schema.xml
+
 ## [100.1.9] - 2023-04-23
 ### Fixed
 - hotfix for Undefined class constant
