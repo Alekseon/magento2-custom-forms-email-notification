@@ -7,6 +7,8 @@ namespace Alekseon\CustomFormsEmailNotification\Model;
 
 use Alekseon\CustomFormsBuilder\Model\FormRecord;
 use Alekseon\CustomFormsBuilder\Model\FormRepository;
+use Alekseon\CustomFormsEmailNotification\Model\Email\AbstractSender;
+use Magento\Framework\App\Area;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
 /**
@@ -99,11 +101,15 @@ class EmailNotification extends \Magento\Framework\Model\AbstractModel
         return $this;
     }
 
+    /**
+     * @return false|AbstractSender
+     */
     protected function getSenderModel()
     {
         $notificationType = $this->getNotificationType();
         if (isset($this->emailSenders[$notificationType])) {
-            return $this->emailSenders[$notificationType];
+            $emailSender = $this->emailSenders[$notificationType];
+            return $emailSender;
         }
         return false;
     }
@@ -128,7 +134,6 @@ class EmailNotification extends \Magento\Framework\Model\AbstractModel
                 }
             }
         } else {
-            $this->setSentStatus(self::STATUS_MISSED);
             $this->setSentStatus(self::STATUS_PENDING);
         }
 

@@ -9,8 +9,8 @@
     <type name="Alekseon\CustomFormsEmailNotification\Model\EmailNotification">
         <arguments>
             <argument name="emailSenders" xsi:type="array">
-                <item name="customer_confirmation" xsi:type="object">Alekseon\CustomFormsEmailNotification\Model\Email\CustomerConfirmation</item>
-                <item name="new_record_notification" xsi:type="object">Alekseon\CustomFormsEmailNotification\Model\Email\EmailNotification</item>
+                <item name="customer_confirmation" xsi:type="object">Alekseon\CustomFormsEmailNotification\Model\Email\CustomerConfirmation\Proxy</item>
+                <item name="new_record_notification" xsi:type="object">Alekseon\CustomFormsEmailNotification\Model\Email\EmailNotification\Proxy</item>
             </argument>
         </arguments>
     </type>

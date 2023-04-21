@@ -6,7 +6,9 @@
 namespace Alekseon\CustomFormsEmailNotification\Model\Email;
 
 use Alekseon\CustomFormsBuilder\Model\FormRecord;
+use Magento\Framework\App\Area;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\State;
 use Magento\Framework\Mail\Template\SenderResolverInterface;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Store\Model\StoreManagerInterface;
@@ -35,6 +37,10 @@ abstract class AbstractSender
      * @var LoggerInterface
      */
     protected $logger;
+    /**
+     * @var State
+     */
+    protected $appState;
 
     /**
      * @param TransportBuilder $transportBuilder
@@ -48,7 +54,8 @@ abstract class AbstractSender
         StoreManagerInterface $storeManager,
         SenderResolverInterface $senderResolver,
         ScopeConfigInterface $scopeConfig,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        State $appState
     )
     {
         $this->transportBuilder = $transportBuilder;
@@ -56,6 +63,7 @@ abstract class AbstractSender
         $this->senderResolver = $senderResolver;
         $this->scopeConfig = $scopeConfig;
         $this->logger = $logger;
+        $this->appState = $appState;
     }
 
     /**
@@ -92,28 +100,21 @@ abstract class AbstractSender
      */
     public function send()
     {
-        $templateParams = $this->getTemplateParams();
-        $emails = $this->getReceiverEmails();
-
-        return $this->sendEmailTemplate(
-            $emails,
-            $this->getTemplateId(),
-            $this->getSender(),
-            $templateParams
-        );
+        return $this->appState->emulateAreaCode(Area::AREA_FRONTEND, [$this, 'sendEmailTemplate']);
     }
 
     /**
-     * @param $emails
-     * @param $templateId
-     * @param string $sender
-     * @param array $templateParams
      * @return bool
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\MailException
      */
-    protected function sendEmailTemplate($emails, $templateId, string $sender, array $templateParams = [])
+    public function sendEmailTemplate()
     {
+        $templateId = $this->getTemplateId();
+        $sender = $this->getSender();
+        $templateParams = $this->getTemplateParams();
+        $emails = $this->getReceiverEmails();
+
         $email = array_pop($emails);
 
         if (!$email || !$sender) {
@@ -126,7 +127,7 @@ abstract class AbstractSender
         $this->transportBuilder->setTemplateIdentifier($templateId)
             ->setTemplateOptions(
                 [
-                    'area' => \Magento\Framework\App\Area::AREA_ADMINHTML,
+                    'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
                     'store' => $storeId
                 ]
             )
