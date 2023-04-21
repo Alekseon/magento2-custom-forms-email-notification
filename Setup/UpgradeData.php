@@ -45,6 +45,11 @@ class UpgradeData implements UpgradeDataInterface
         if (version_compare($context->getVersion(), '1.0.1', '<')) {
             $this->addCustomerEmailNotifactionAttributes();
         }
+
+        if (version_compare($context->getVersion(), '1.0.2', '<')) {
+            $this->updateCustomerEmailField();
+            $this->addAdminConfirmationEmailTemplateAttribute();
+        }
     }
 
     /**
@@ -129,4 +134,37 @@ class UpgradeData implements UpgradeDataInterface
         );
     }
 
+    protected function updateCustomerEmailField()
+    {
+        $eavSetup = $this->eavSetupFactory->create();
+        $eavSetup->setAttributeRepository($this->formAttributeRepository);
+        $eavSetup->updateAttribute(
+            'customer_notification_email_field',
+            [
+                'frontend_label' => 'Customer Email Field',
+                'group_code' => 'customer_email',
+            ]
+        );
+    }
+
+    protected function addAdminConfirmationEmailTemplateAttribute()
+    {
+        $eavSetup = $this->eavSetupFactory->create();
+        $eavSetup->setAttributeRepository($this->formAttributeRepository);
+
+        $eavSetup->createAttribute(
+            'admin_confirmation_email_template',
+            [
+                'frontend_input' => 'select',
+                'frontend_label' => 'Template',
+                'backend_type' => 'varchar',
+                'source_model' => 'Alekseon\CustomFormsEmailNotification\Model\Attribute\Source\AdminConfirmationTemplate',
+                'visible_in_grid' => false,
+                'is_required' => false,
+                'sort_order' => 40,
+                'scope' => Scopes::SCOPE_STORE,
+                'group_code' => 'confirmation_email',
+            ]
+        );
+    }
 }

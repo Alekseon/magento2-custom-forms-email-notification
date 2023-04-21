@@ -22,6 +22,7 @@ class RemoveAttributesFromGeneralTabPlugin
     {
         $groups['excluded'][] = 'confirmation_email';
         $groups['excluded'][] = 'customer_confirmation_email';
+        $groups['excluded'][] = 'customer_email';
 
         return [$generalFieldset, $formObject, $groups];
     }

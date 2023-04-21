@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [100.1.8] - 2023-04-23
+### Added
+- Asynchronous sending emails by cron
+- template configuration for admin confirmation email
+- set replyto on admin confiration email
+
 ## [100.1.7] - 2023-02-10
 ### Fixed
 - fix for case when CustomerNotificationEmailField value is null

@@ -5,8 +5,8 @@
  */
 namespace Alekseon\CustomFormsEmailNotification\Observer;
 
+use Alekseon\CustomFormsEmailNotification\Model\EmailNotificationFactory;
 use Alekseon\CustomFormsBuilder\Model\FormRecord;
-use Alekseon\CustomFormsEmailNotification\Model\Email\EmailNotification;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
@@ -17,16 +17,18 @@ use Magento\Framework\Event\ObserverInterface;
 class FormRecordSaveAfter implements ObserverInterface
 {
     /**
-     * @var EmailNotification
+     * @var EmailNotificationFactory
      */
-    protected EmailNotification $emailNotification;
+    protected $emailNotificationFactory;
 
     /**
-     * @param EmailNotification $emailNotification
+     * @param EmailNotificationFactory $emailNotificationFactory
      */
-    public function __construct(EmailNotification $emailNotification)
+    public function __construct(
+        EmailNotificationFactory $emailNotificationFactory
+    )
     {
-        $this->emailNotification = $emailNotification;
+        $this->emailNotificationFactory = $emailNotificationFactory;
     }
 
     /**
@@ -39,14 +41,10 @@ class FormRecordSaveAfter implements ObserverInterface
         $form = $formRecord->getForm();
 
         if ($formRecord->isObjectNew() && $form->getEnableEmailNotification()) {
-            $this->emailNotification->sendNotificationEmail(
-                [
-                    'form' => $form,
-                    'record' => $formRecord,
-                    'recordHtml' => '',
-                ],
-                $formRecord->getStoreId()
-            );
+            $emailNotification = $this->emailNotificationFactory->create();
+            $emailNotification->setFormRecord($formRecord);
+            $emailNotification->setNotificationType('new_record_notification');
+            $emailNotification->send();
         }
     }
 }

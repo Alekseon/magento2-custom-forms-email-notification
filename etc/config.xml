@@ -8,6 +8,10 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <alekseon_custom_forms>
+            <notification_email>
+                <async_sending>1</async_sending>
+                <sending_limit>50</sending_limit>
+            </notification_email>
             <new_entity_notification_email>
                 <identity>sales</identity>
                 <template>alekseon_custom_forms_new_entity_notification_email_template</template>
