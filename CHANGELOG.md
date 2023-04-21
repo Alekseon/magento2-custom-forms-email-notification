@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [Unreleased]
+### Added
+- Asynchronous sending emails by cron
+
 ## [100.1.7] - 2023-02-10
 ### Fixed
 - fix for case when CustomerNotificationEmailField value is null

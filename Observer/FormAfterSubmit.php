@@ -5,10 +5,9 @@
  */
 namespace Alekseon\CustomFormsEmailNotification\Observer;
 
-use Alekseon\CustomFormsEmailNotification\Model\Email\CustomerConfirmation;
+use Alekseon\CustomFormsEmailNotification\Model\EmailNotificationFactory;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class FormAfterSubmit
@@ -17,19 +16,18 @@ use Psr\Log\LoggerInterface;
 class FormAfterSubmit implements ObserverInterface
 {
     /**
-     * @var
+     * @var EmailNotificationFactory
      */
-    protected $customerConfirmation;
+    protected $emailNotificationFactory;
 
     /**
-     * FormAfterSubmit constructor.
-     * @param CustomerConfirmation $customerConfirmation
+     * @param EmailNotificationFactory $emailNotificationFactory
      */
     public function __construct(
-        CustomerConfirmation $customerConfirmation
+        EmailNotificationFactory $emailNotificationFactory
     )
     {
-        $this->customerConfirmation = $customerConfirmation;
+        $this->emailNotificationFactory = $emailNotificationFactory;
     }
 
     /**
@@ -38,6 +36,12 @@ class FormAfterSubmit implements ObserverInterface
     public function execute(Observer $observer)
     {
         $formRecord = $observer->getFormRecord();
-        $this->customerConfirmation->send($formRecord);
+        $form = $formRecord->getForm();
+        if ($form->getCustomerEmailNotificationEnable()) {
+            $emailNotification = $this->emailNotificationFactory->create();
+            $emailNotification->setFormRecord($formRecord);
+            $emailNotification->setNotificationType('customer_confirmation');
+            $emailNotification->send();
+        }
     }
 }
