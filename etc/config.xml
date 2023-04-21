@@ -10,6 +10,7 @@
         <alekseon_custom_forms>
             <notification_email>
                 <async_sending>1</async_sending>
+                <sending_limit>50</sending_limit>
             </notification_email>
             <new_entity_notification_email>
                 <identity>sales</identity>

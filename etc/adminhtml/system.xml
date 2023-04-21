@@ -14,6 +14,12 @@
                     <label>Asynchronous sending</label>
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                 </field>
+                <field id="sending_limit" translate="label" type="text" sortOrder="1" showInDefault="1" canRestore="1">
+                    <label>Limit per cron run</label>
+                    <depends>
+                        <field id="async_sending">1</field>
+                    </depends>
+                </field>
             </group>
             <group id="new_entity_notification_email" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>New Entity Notification Email</label>
