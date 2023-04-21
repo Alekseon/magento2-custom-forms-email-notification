@@ -28,6 +28,22 @@ class EmailNotification extends AbstractSender
     }
 
     /**
+     * @return false
+     */
+    public function getReplyToEmail()
+    {
+        $form = $this->formRecord->getForm();
+        $emailField = $form->getCustomerNotificationEmailField();
+        if ($emailField) {
+            $email = $this->formRecord->getData((string)$emailField);
+            if ($email) {
+                return $email;
+            }
+        }
+        return false;
+    }
+
+    /**
      * @return string
      */
     public function getSender()
@@ -44,6 +60,11 @@ class EmailNotification extends AbstractSender
      */
     public function getTemplateId()
     {
-        return $this->scopeConfig->getValue('alekseon_custom_forms/new_entity_notification_email/template');
+        $form = $this->formRecord->getForm();
+        $templateId = $form->getAdminConfirmationEmailTemplate();
+        if (!$templateId) {
+            $templateId = $this->scopeConfig->getValue('alekseon_custom_forms/new_entity_notification_email/template');
+        }
+        return $templateId;
     }
 }

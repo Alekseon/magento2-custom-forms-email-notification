@@ -6,6 +6,6 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
-    <template id="alekseon_custom_forms_new_entity_notification_email_template" label="Alekseon Custom Form New Entity Notification Template" file="new_entity_notification.html" type="html" module="Alekseon_CustomFormsEmailNotification" area="adminhtml"/>
-    <template id="alekseon_custom_forms_customer_confirmation_email_template" label="Alekseon Custom Form Customer Confirmation Template" file="customer_confirmation.html" type="html" module="Alekseon_CustomFormsEmailNotification" area="adminhtml"/>
+    <template id="alekseon_custom_forms_new_entity_notification_email_template" label="Alekseon Custom Form New Entity Notification Template" file="new_entity_notification.html" type="html" module="Alekseon_CustomFormsEmailNotification" area="frontend"/>
+    <template id="alekseon_custom_forms_customer_confirmation_email_template" label="Alekseon Custom Form Customer Confirmation Template" file="customer_confirmation.html" type="html" module="Alekseon_CustomFormsEmailNotification" area="frontend"/>
 </config>

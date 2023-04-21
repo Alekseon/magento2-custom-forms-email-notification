@@ -14,7 +14,8 @@ class ConfirmationEmail extends Form implements TabInterface
 {
     const TITLE = 'Confirmation email';
 
-    const DEFAULT_TEMPLATE_CONFIG_PATH = 'alekseon_custom_forms/customer_confirmation_email/template';
+    const DEFAULT_CUSTOMER_CONFIRATION_TEMPLATE_CONFIG_PATH = 'alekseon_custom_forms/customer_confirmation_email/template';
+    const DEFAULT_ADMIN_CONFIRATION_TEMPLATE_CONFIG_PATH = 'alekseon_custom_forms/new_entity_notification_email/template';
 
     protected $dataObject;
 
@@ -71,11 +72,17 @@ class ConfirmationEmail extends Form implements TabInterface
 
         $form = $this->_formFactory->create();
 
-        $widgetFieldset = $form->addFieldset('confirmation_email_settings',
+        $customerEmailFieldset = $form->addFieldset('customer_email',
+            ['legend' => __('Customer Email')]
+        );
+
+        $this->addAllAttributeFields($customerEmailFieldset, $dataObject, ['included' => ['customer_email']]);
+
+        $adminConfirmationEmailFieldset = $form->addFieldset('confirmation_email_settings',
             ['legend' => __('Admin Confirmation Email')]
         );
 
-        $this->addAllAttributeFields($widgetFieldset, $dataObject, ['included' => ['confirmation_email']]);
+        $this->addAllAttributeFields($adminConfirmationEmailFieldset, $dataObject, ['included' => ['confirmation_email']]);
 
         if ($dataObject->getCanUseForWidget()) {
             $customerConfirmationEmailFieldset = $form->addFieldset('customer_confirmation_email_settings',
@@ -97,8 +104,13 @@ class ConfirmationEmail extends Form implements TabInterface
     public function addAttributeField($formFieldset, AttributeInterface $attribute)
     {
         if ($attribute->getAttributeCode() == 'customer_notification_template') {
-            $attribute->getSourceModel()->setPath($this->_scopeConfig->getValue(self::DEFAULT_TEMPLATE_CONFIG_PATH));
+            $attribute->getSourceModel()->setPath($this->_scopeConfig->getValue(self::DEFAULT_CUSTOMER_CONFIRATION_TEMPLATE_CONFIG_PATH));
         }
+
+        if ($attribute->getAttributeCode() == 'admin_confirmation_email_template') {
+            $attribute->getSourceModel()->setPath($this->_scopeConfig->getValue(self::DEFAULT_ADMIN_CONFIRATION_TEMPLATE_CONFIG_PATH));
+        }
+
         return parent::addAttributeField($formFieldset, $attribute);
     }
 

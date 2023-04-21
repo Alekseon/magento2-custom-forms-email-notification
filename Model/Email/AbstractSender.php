@@ -96,6 +96,14 @@ abstract class AbstractSender
     abstract public function getTemplateId();
 
     /**
+     * @return false
+     */
+    public function getReplyToEmail()
+    {
+        return false;
+    }
+
+    /**
      * @return null
      */
     public function send()
@@ -114,6 +122,7 @@ abstract class AbstractSender
         $sender = $this->getSender();
         $templateParams = $this->getTemplateParams();
         $emails = $this->getReceiverEmails();
+        $replyToEmail = $this->getReplyToEmail();
 
         $email = array_pop($emails);
 
@@ -134,6 +143,10 @@ abstract class AbstractSender
             ->setTemplateVars($templateParams)
             ->setFrom($from)
             ->addTo($email);
+
+        if ($replyToEmail) {
+            $this->transportBuilder->setReplyTo($replyToEmail);
+        }
 
         foreach ($emails as $email) {
             $this->transportBuilder->addBcc($email);
