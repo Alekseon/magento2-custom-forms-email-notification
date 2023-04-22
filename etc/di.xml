@@ -14,4 +14,7 @@
             </argument>
         </arguments>
     </type>
+    <type name="Alekseon\CustomFormsBuilder\Model\FormRecord\Attribute">
+        <plugin name="Alekseon_CustomFormsEmailNotification::CustomerEmailValidatorPlugin" type="Alekseon\CustomFormsEmailNotification\Plugin\CustomerEmailValidatorPlugin"/>
+    </type>
 </config>
