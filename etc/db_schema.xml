@@ -14,9 +14,9 @@
                 comment="Form Entity ID"/>
         <column xsi:type="int" name="record_id" unsigned="true" nullable="false"
                 comment="Record Entity ID"/>
-        <column xsi:type="varchar" name="notification_type" unsigned="true" nullable="false" identity="false" length="255"
+        <column xsi:type="varchar" name="notification_type" nullable="false" length="255"
                 comment="Notification Type"/>
-        <column xsi:type="varchar" name="sent_status" unsigned="true" nullable="false" identity="false" length="255"
+        <column xsi:type="varchar" name="sent_status" nullable="false" length="255"
                 comment="Sent Status"/>
         <column xsi:type="timestamp" name="sent_at" nullable="true"
                 comment="Sent At"/>

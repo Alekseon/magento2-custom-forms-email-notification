@@ -124,7 +124,7 @@ class ConfirmationEmail extends Form implements TabInterface
         $data = $this->getDataObject()->getData();
 
         if (!$this->getDataObject()->getCustomerNotificationTemplate()) {
-            $data['customer_notification_template'] = $this->_scopeConfig->getValue(self::DEFAULT_TEMPLATE_CONFIG_PATH);
+            $data['customer_notification_template'] = $this->_scopeConfig->getValue(self::DEFAULT_CUSTOMER_CONFIRATION_TEMPLATE_CONFIG_PATH);
         }
 
         if (!$this->getDataObject()->getCustomerNotificationIdentity()) {
