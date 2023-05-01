@@ -3,6 +3,7 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
 
 namespace Alekseon\CustomFormsEmailNotification\Setup;
 
@@ -40,6 +41,15 @@ class UpgradeData implements UpgradeDataInterface
         $this->eavSetupFactory = $eavSetupFactory;
         $this->formAttributeRepository = $formAttributeRepository;
     }
+
+    /**
+     * @param ModuleDataSetupInterface $setup
+     * @param ModuleContextInterface $context
+     * @return void
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Magento\Framework\Exception\TemporaryState\CouldNotSaveException
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         if (version_compare($context->getVersion(), '1.0.1', '<')) {

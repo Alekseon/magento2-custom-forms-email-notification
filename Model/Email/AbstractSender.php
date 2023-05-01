@@ -3,6 +3,8 @@
  * Copyright © Alekseon sp. z o.o.
  * http://www.alekseon.com/
  */
+declare(strict_types=1);
+
 namespace Alekseon\CustomFormsEmailNotification\Model\Email;
 
 use Alekseon\CustomFormsBuilder\Model\FormRecord;
