@@ -5,71 +5,71 @@
  */
 declare(strict_types=1);
 
-namespace Alekseon\CustomFormsEmailNotification\Setup;
+namespace Alekseon\CustomFormsEmailNotification\Setup\Patch\Data;
 
 use Alekseon\AlekseonEav\Model\Adminhtml\System\Config\Source\Scopes;
-use Alekseon\AlekseonEav\Setup\EavDataSetupFactory;
+use Alekseon\AlekseonEav\Setup\EavDataSetup;
 use Alekseon\CustomFormsBuilder\Model\Form\AttributeRepository;
-use Magento\Framework\Setup\ModuleContextInterface;
+use Alekseon\AlekseonEav\Setup\EavDataSetupFactory;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Magento\Framework\Setup\UpgradeDataInterface;
+use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\Framework\Setup\Patch\PatchRevertableInterface;
 
 /**
- * Class UpgradeData
- * @package Alekseon\CustomFormsEmailNotification\Setup
+ *
  */
-class UpgradeData implements UpgradeDataInterface
+class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRevertableInterface
 {
+    /**
+     * @var ModuleDataSetupInterface
+     */
+    private $moduleDataSetup;
     /**
      * @var EavDataSetupFactory
      */
-    protected EavDataSetupFactory $eavSetupFactory;
+    private $eavSetupFactory;
+
     /**
      * @var AttributeRepository
      */
-    protected AttributeRepository $formAttributeRepository;
+    private $formAttributeRepository;
 
     /**
-     * InstallData constructor.
      * @param EavDataSetupFactory $eavSetupFactory
      * @param AttributeRepository $formAttributeRepository
      */
     public function __construct(
+        ModuleDataSetupInterface $moduleDataSetup,
         EavDataSetupFactory $eavSetupFactory,
         AttributeRepository $formAttributeRepository
     ) {
+        $this->moduleDataSetup = $moduleDataSetup;
         $this->eavSetupFactory = $eavSetupFactory;
         $this->formAttributeRepository = $formAttributeRepository;
     }
 
     /**
-     * @param ModuleDataSetupInterface $setup
-     * @param ModuleContextInterface $context
-     * @return void
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @throws \Magento\Framework\Exception\TemporaryState\CouldNotSaveException
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @inheritdoc
      */
-    public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
+    public function apply()
     {
-        if (version_compare($context->getVersion(), '1.0.1', '<')) {
-            $this->addCustomerEmailNotifactionAttributes();
-        }
+        $this->moduleDataSetup->getConnection()->startSetup();
 
-        if (version_compare($context->getVersion(), '1.0.2', '<')) {
-            $this->updateCustomerEmailField();
-            $this->addAdminConfirmationEmailTemplateAttribute();
-        }
-    }
-
-    /**
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
-     * @throws \Magento\Framework\Exception\TemporaryState\CouldNotSaveException
-     */
-    protected function addCustomerEmailNotifactionAttributes()
-    {
+        /** @var EavDataSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create();
         $eavSetup->setAttributeRepository($this->formAttributeRepository);
+
+        $eavSetup->createAttribute(
+            'enable_email_notification',
+            [
+                'frontend_input' => 'boolean',
+                'frontend_label' => 'Notify admin By Email about new entities',
+                'visible_in_grid' => true,
+                'sort_order' => 10,
+                'scope' => Scopes::SCOPE_GLOBAL,
+                'group_code' => 'confirmation_email',
+            ]
+        );
 
         $eavSetup->createAttribute(
             'customer_email_notification_enable',
@@ -83,18 +83,18 @@ class UpgradeData implements UpgradeDataInterface
             ]
         );
 
-        $eavSetup->createAttribute(
+        $eavSetup->createOrUpdateAttribute(
             'customer_notification_email_field',
             [
+                'frontend_label' => 'Customer Email Field',
+                'group_code' => 'customer_email',
                 'frontend_input' => 'select',
-                'frontend_label' => 'Email field',
                 'backend_type' => 'varchar',
                 'source_model' => 'Alekseon\CustomFormsBuilder\Model\Attribute\Source\TextFormAttributes',
                 'visible_in_grid' => false,
                 'is_required' => false,
                 'sort_order' => 20,
                 'scope' => Scopes::SCOPE_GLOBAL,
-                'group_code' => 'customer_confirmation_email',
             ]
         );
 
@@ -142,25 +142,6 @@ class UpgradeData implements UpgradeDataInterface
                 'note' => __('Comma-separated'),
             ]
         );
-    }
-
-    protected function updateCustomerEmailField()
-    {
-        $eavSetup = $this->eavSetupFactory->create();
-        $eavSetup->setAttributeRepository($this->formAttributeRepository);
-        $eavSetup->updateAttribute(
-            'customer_notification_email_field',
-            [
-                'frontend_label' => 'Customer Email Field',
-                'group_code' => 'customer_email',
-            ]
-        );
-    }
-
-    protected function addAdminConfirmationEmailTemplateAttribute()
-    {
-        $eavSetup = $this->eavSetupFactory->create();
-        $eavSetup->setAttributeRepository($this->formAttributeRepository);
 
         $eavSetup->createAttribute(
             'admin_confirmation_email_template',
@@ -176,5 +157,44 @@ class UpgradeData implements UpgradeDataInterface
                 'group_code' => 'confirmation_email',
             ]
         );
+
+        $this->moduleDataSetup->getConnection()->endSetup();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getDependencies()
+    {
+        return [];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function revert()
+    {
+        $this->moduleDataSetup->getConnection()->startSetup();
+
+        $eavSetup = $this->eavSetupFactory->create();
+        $eavSetup->setAttributeRepository($this->formAttributeRepository);
+
+        $eavSetup->deleteAttribute('enable_email_notification');
+        $eavSetup->deleteAttribute('customer_email_notification_enable');
+        $eavSetup->deleteAttribute('customer_notification_email_field');
+        $eavSetup->deleteAttribute('customer_notification_identity');
+        $eavSetup->deleteAttribute('customer_notification_template');
+        $eavSetup->deleteAttribute('customer_notification_copy_to');
+        $eavSetup->deleteAttribute('admin_confirmation_email_template');
+
+        $this->moduleDataSetup->getConnection()->endSetup();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAliases()
+    {
+        return [];
     }
 }
