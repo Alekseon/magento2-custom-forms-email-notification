@@ -65,6 +65,7 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
         $this->createCustomerConfirmationAttributes($eavSetup);
 
         $this->moduleDataSetup->getConnection()->endSetup();
+        return $this;
     }
 
     private function createCustomerConfirmationAttributes($eavSetup)
