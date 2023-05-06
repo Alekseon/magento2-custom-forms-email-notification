@@ -9,10 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [100.1.12] - 2023-05-06
+### Changed
+- code quality improvements
+
 ## [100.1.11] - 2023-05-01
 ### Added
 - added email validation for customer email input in admin
 - github actions
+### Changed
 - code quality improvements and introduce strict_types
 
 ## [100.1.10] - 2023-04-23
