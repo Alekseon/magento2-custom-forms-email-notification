@@ -50,6 +50,7 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
 
     /**
      * @inheritdoc
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function apply()
     {
@@ -59,45 +60,15 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
         $eavSetup = $this->eavSetupFactory->create();
         $eavSetup->setAttributeRepository($this->formAttributeRepository);
 
-        $eavSetup->createAttribute(
-            'enable_email_notification',
-            [
-                'frontend_input' => 'boolean',
-                'frontend_label' => 'Notify admin By Email about new entities',
-                'visible_in_grid' => true,
-                'sort_order' => 10,
-                'scope' => Scopes::SCOPE_GLOBAL,
-                'group_code' => 'confirmation_email',
-            ]
-        );
+        $this->createCustomerNotificationEmailFieldAttribute($eavSetup);
+        $this->createAdminNotificationAttributes($eavSetup);
+        $this->createCustomerConfirmationAttributes($eavSetup);
 
-        $eavSetup->createAttribute(
-            'customer_email_notification_enable',
-            [
-                'frontend_input' => 'boolean',
-                'frontend_label' => 'Send confirmation Email to customer',
-                'visible_in_grid' => false,
-                'sort_order' => 10,
-                'scope' => Scopes::SCOPE_GLOBAL,
-                'group_code' => 'customer_confirmation_email',
-            ]
-        );
+        $this->moduleDataSetup->getConnection()->endSetup();
+    }
 
-        $eavSetup->createOrUpdateAttribute(
-            'customer_notification_email_field',
-            [
-                'frontend_label' => 'Customer Email Field',
-                'group_code' => 'customer_email',
-                'frontend_input' => 'select',
-                'backend_type' => 'varchar',
-                'source_model' => 'Alekseon\CustomFormsBuilder\Model\Attribute\Source\TextFormAttributes',
-                'visible_in_grid' => false,
-                'is_required' => false,
-                'sort_order' => 20,
-                'scope' => Scopes::SCOPE_GLOBAL,
-            ]
-        );
-
+    private function createCustomerConfirmationAttributes($eavSetup)
+    {
         $eavSetup->createAttribute(
             'customer_notification_identity',
             [
@@ -144,6 +115,37 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
         );
 
         $eavSetup->createAttribute(
+            'customer_email_notification_enable',
+            [
+                'frontend_input' => 'boolean',
+                'frontend_label' => 'Send confirmation Email to customer',
+                'visible_in_grid' => false,
+                'sort_order' => 10,
+                'scope' => Scopes::SCOPE_GLOBAL,
+                'group_code' => 'customer_confirmation_email',
+            ]
+        );
+    }
+
+    /**
+     * @param $eavSetup
+     * @return void
+     */
+    private function createAdminNotificationAttributes($eavSetup)
+    {
+        $eavSetup->createAttribute(
+            'enable_email_notification',
+            [
+                'frontend_input' => 'boolean',
+                'frontend_label' => 'Notify admin By Email about new entities',
+                'visible_in_grid' => true,
+                'sort_order' => 10,
+                'scope' => Scopes::SCOPE_GLOBAL,
+                'group_code' => 'confirmation_email',
+            ]
+        );
+
+        $eavSetup->createAttribute(
             'admin_confirmation_email_template',
             [
                 'frontend_input' => 'select',
@@ -157,8 +159,28 @@ class CreateWidgetFormsAttributesPatch implements DataPatchInterface, PatchRever
                 'group_code' => 'confirmation_email',
             ]
         );
+    }
 
-        $this->moduleDataSetup->getConnection()->endSetup();
+    /**
+     * @param $eavSetup
+     * @return void
+     */
+    private function createCustomerNotificationEmailFieldAttribute($eavSetup)
+    {
+        $eavSetup->createOrUpdateAttribute(
+            'customer_notification_email_field',
+            [
+                'frontend_label' => 'Customer Email Field',
+                'group_code' => 'customer_email',
+                'frontend_input' => 'select',
+                'backend_type' => 'varchar',
+                'source_model' => 'Alekseon\CustomFormsBuilder\Model\Attribute\Source\TextFormAttributes',
+                'visible_in_grid' => false,
+                'is_required' => false,
+                'sort_order' => 20,
+                'scope' => Scopes::SCOPE_GLOBAL,
+            ]
+        );
     }
 
     /**
