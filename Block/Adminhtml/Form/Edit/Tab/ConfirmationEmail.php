@@ -18,6 +18,8 @@ class ConfirmationEmail extends Form implements TabInterface
 
     const DEFAULT_CUSTOMER_CONFIRATION_TEMPLATE_CONFIG_PATH = 'alekseon_custom_forms/customer_confirmation_email/template';
     const DEFAULT_ADMIN_CONFIRATION_TEMPLATE_CONFIG_PATH = 'alekseon_custom_forms/new_entity_notification_email/template';
+    const CUSTOMER_CONFIRMATION_EMAIL_TEMPLATE_PATH = 'alekseon_custom_forms_customer_confirmation_email_template';
+    const NEW_ENTITY_NOTIFICATION_EMAIL_TEMPLATE_PATH = 'alekseon_custom_forms_new_entity_notification_email_template';
 
     protected $dataObject;
 
@@ -106,14 +108,14 @@ class ConfirmationEmail extends Form implements TabInterface
     public function addAttributeField($formFieldset, AttributeInterface $attribute)
     {
         if ($attribute->getAttributeCode() == 'customer_notification_template') {
-            $attribute->getSourceModel()->setPath($this->_scopeConfig->getValue(self::DEFAULT_CUSTOMER_CONFIRATION_TEMPLATE_CONFIG_PATH));
+            $attribute->getSourceModel()->setPath(self::CUSTOMER_CONFIRMATION_EMAIL_TEMPLATE_PATH);
         }
 
         if ($attribute->getAttributeCode() == 'admin_confirmation_email_template') {
-            $attribute->getSourceModel()->setPath($this->_scopeConfig->getValue(self::DEFAULT_ADMIN_CONFIRATION_TEMPLATE_CONFIG_PATH));
+            $attribute->getSourceModel()->setPath(self::NEW_ENTITY_NOTIFICATION_EMAIL_TEMPLATE_PATH);
         }
 
-        return parent::addAttributeField($formFieldset, $attribute);
+        parent::addAttributeField($formFieldset, $attribute);
     }
 
     /**
