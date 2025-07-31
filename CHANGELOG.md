@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [100.1.14] - 2025-05-06
+### Changed
+- Asynchronous sending disabled by default
+
+## [100.1.13] - 2025-05-22
+### Fixed
+- https://github.com/Alekseon/magento2-custom-forms-email-notification/issues/2
+
 ## [100.1.12] - 2023-05-06
 ### Changed
 - code quality improvements
