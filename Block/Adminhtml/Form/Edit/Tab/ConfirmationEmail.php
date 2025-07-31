@@ -76,6 +76,16 @@ class ConfirmationEmail extends Form implements TabInterface
 
         $form = $this->_formFactory->create();
 
+        $messagesRender = $this->getLayout()->createBlock(
+            \Alekseon\CustomFormsBuilder\Block\Adminhtml\Form\Edit\Field\Messages::class
+        );
+
+        $form->addField(
+            'messages',
+            'text',
+            [],
+        )->setRenderer($messagesRender);
+
         $customerEmailFieldset = $form->addFieldset('customer_email',
             ['legend' => __('Customer Email')]
         );
@@ -95,6 +105,8 @@ class ConfirmationEmail extends Form implements TabInterface
 
             $this->addAllAttributeFields($customerConfirmationEmailFieldset, $dataObject, ['included' => ['customer_confirmation_email']]);
         }
+
+        $this->_eventManager->dispatch('alekseon_prepare_confirmation_email_form', ['form' => $form]);
 
         $this->setForm($form);
 
