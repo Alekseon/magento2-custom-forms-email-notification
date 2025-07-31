@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [100.1.15] - 2025-07-31
+### Added
+- Warning when Magento_CustomerSampleData is enabled
+
 ## [100.1.14] - 2025-05-06
 ### Changed
 - Asynchronous sending disabled by default
