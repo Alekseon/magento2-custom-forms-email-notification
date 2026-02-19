@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
-## [Unreleased]
+## [100.1.16] - 2026-02-19
 ### Fixed
 - Use created from store id for email template
 

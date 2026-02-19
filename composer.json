@@ -5,7 +5,7 @@
         "alekseon/custom-forms-builder": "^102.3.15"
     },
     "type": "magento2-module",
-    "version": "100.1.15",
+    "version": "100.1.16",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
