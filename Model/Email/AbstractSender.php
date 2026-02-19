@@ -132,7 +132,7 @@ abstract class AbstractSender
             return false;
         }
 
-        $storeId = $this->storeManager->getDefaultStoreView()->getId();
+        $storeId = $this->formRecord->getCreatedFromStoreId() ?: $this->storeManager->getDefaultStoreView()->getId();
         $from = $this->senderResolver->resolve($sender);
 
         $this->transportBuilder->setTemplateIdentifier($templateId)

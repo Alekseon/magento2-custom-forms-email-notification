@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [Unreleased]
+### Fixed
+- Use created from store id for email template
+
 ## [100.1.15] - 2025-07-31
 ### Added
 - Warning when Magento_CustomerSampleData is enabled
