@@ -17,4 +17,7 @@
     <type name="Alekseon\CustomFormsBuilder\Model\FormRecord\Attribute">
         <plugin name="Alekseon_CustomFormsEmailNotification::CustomerEmailValidatorPlugin" type="Alekseon\CustomFormsEmailNotification\Plugin\CustomerEmailValidatorPlugin" sortOrder="100" />
     </type>
+    <type name="Alekseon\CustomFormsBuilder\Model\Form">
+        <plugin name="Alekseon_CustomFormsEmailNotification::CustomFormSystemValuesPlugin" type="Alekseon\CustomFormsEmailNotification\Plugin\CustomFormSystemValuesPlugin" sortOrder="100" />
+    </type>
 </config>

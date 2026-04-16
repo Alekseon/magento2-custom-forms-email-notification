@@ -20,13 +20,9 @@ class EmailNotification extends AbstractSender
      */
     public function getReceiverEmails()
     {
-        $emailsConfig = (string) $this->scopeConfig->getValue(
-            'alekseon_custom_forms/new_entity_notification_email/to',
-            ScopeInterface::SCOPE_STORE,
-            $this->formRecord->getCreatedFromStoreId()
-        );
-        $emails = explode(',', $emailsConfig);
-        return $emails;
+        $form = $this->formRecord->getForm();
+        $emails = $form->getAdminConfirmationEmailSendTo();
+        return explode(',', $emails);
     }
 
     /**
@@ -63,10 +59,6 @@ class EmailNotification extends AbstractSender
     public function getTemplateId()
     {
         $form = $this->formRecord->getForm();
-        $templateId = $form->getAdminConfirmationEmailTemplate();
-        if (!$templateId) {
-            $templateId = $this->scopeConfig->getValue('alekseon_custom_forms/new_entity_notification_email/template');
-        }
-        return $templateId;
+        return $form->getAdminConfirmationEmailTemplate();
     }
 }
