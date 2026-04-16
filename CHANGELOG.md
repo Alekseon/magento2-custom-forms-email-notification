@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 ### Added
 
+## [100.2.0] - 2026-04-16
+### Added
+- "Send Email To" attribute for admin confirmation email and use system values for it and for template 
+
 ## [100.1.16] - 2026-02-19
 ### Fixed
 - Use created from store id for email template
