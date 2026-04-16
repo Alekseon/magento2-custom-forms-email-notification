@@ -11,6 +11,7 @@ class CustomFormSystemValuesPlugin
      * @param \Alekseon\CustomFormsBuilder\Model\Form $form
      * @param $result
      * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterGetSystemValues(\Alekseon\CustomFormsBuilder\Model\Form $form, $result)
     {
