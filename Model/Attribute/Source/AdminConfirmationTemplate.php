@@ -19,9 +19,7 @@ class AdminConfirmationTemplate extends EmailTemplate
      */
     public function getOptions()
     {
-        $options = [
-            0 => __('From Configuration'),
-        ];
+        $options = [];
         $templateOptions = parent::getOptions();
         foreach ($templateOptions as $value => $label) {
             $options[$value] = $label;

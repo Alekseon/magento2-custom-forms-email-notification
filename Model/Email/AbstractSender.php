@@ -126,7 +126,7 @@ abstract class AbstractSender
         $emails = $this->getReceiverEmails();
         $replyToEmail = $this->getReplyToEmail();
 
-        $email = array_pop($emails);
+        $email = array_shift($emails);
 
         if (!$email || !$sender) {
             return false;
